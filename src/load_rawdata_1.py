@@ -53,11 +53,34 @@ class Load_RawData_1:
 				ans = ans.strip()
 				ans = re.sub("\'","",ans)
 
-				if col == 9:
+				if col == "9":
 					ans = ans.replace('台','臺')
-				elif col == 7:
+				elif col =="4":
+					ans = ans.replace('－','-')
+					ans = ans.replace('—','-')
+					ans = ans.replace(' - ','-')
+				elif col =="5":
+				#身分證處理
+					ans = ans.upper()
+					if len(ans)<3:
+						ans = "FFFFFFFFFFFFF"
+					elif ans[0].isalpha() and ans[1:2].isdigit():
+						ans = ans[0:2]+"*******"
+					elif ans.isdigit():
+						pass
+					else:
+						ans = "FFFFFFFFFFFFF"
+				
+				elif col == "7" or col == "6":
 					ans = ans.replace(',','')
+					ans = ans.replace('，','')
 					ans = ans.replace(' ','')
+					if ans.isdigit() ==False:
+						ans = "FFFFFFFFFFFFF"
+
+				elif col == "2":
+					ans = ans.replace('／','/')
+					ans = ans.replace('╱','/')
 
 				
 				#print int(time)
@@ -82,3 +105,4 @@ class Load_RawData_1:
 if __name__ == '__main__':
 	worker = Load_RawData_1('/home/aha/Project/GovCash/link.info','/home/aha/Data/GovCash/ans.csv')
 	worker.work()
+
