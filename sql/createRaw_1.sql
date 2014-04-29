@@ -5,6 +5,7 @@ page	bigint,
 row	bigint,
 col	bigint,
 ans	varchar,
+original_ans	varchar,
 user_id	bigint,
 time	timestamp
 );
