@@ -84,7 +84,9 @@ class Load_RawData_1:
 				elif col =="5":
 				#身分證處理
 					ans = ans.upper()
-					if len(ans)<3:
+					if ans=="":
+						pass
+					elif len(ans)<3:
 						ans = "FFFFFFFFFFFFF"
 					elif ans[0].isalpha() and ans[1:2].isdigit():
 						ans = ans[0:2]+"*******"
@@ -101,7 +103,9 @@ class Load_RawData_1:
 					ans = ans.replace(',','')
 					ans = ans.replace('，','')
 					ans = ans.replace(' ','')
-					if ans.isdigit() ==False:
+					if ans=="":
+						pass
+					elif ans.isdigit() ==False:
 						ans = "FFFFFFFFFFFFF"
 
 				elif col == "2":
