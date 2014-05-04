@@ -86,7 +86,7 @@ class Load_RawData_1:
 				#身分證處理
 					ans = ans.upper()
 					#64/2/5
-					if ans=="" or '政黨證' in ans:
+					if ans=="" or '政黨' in ans:
 						pass
 					elif len(ans)<3:
 						ans = "FFFFFFFFFFFFF"
