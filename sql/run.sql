@@ -1,6 +1,6 @@
 
 drop table u5;
-drop table t12;
+drop table t13;
 
 -- Basic Information
 
@@ -79,20 +79,22 @@ create temporary table T10 as select * from T9 where guess_rate>=0.8;
 
 
 -- 結合表格
-create temporary table T11 as select page,row,col,count(*) from B2 where ans <> 'FFFFFFFFFFFFF' group by page,row,col;
-create table T12 as select 
+create temporary table T11 as select page,row,col,count(*) from B2 where ans = 'FFFFFFFFFFFFF' group by page,row,col;
+create temporary table T12 as select page,row,col,count(*) from B2 group by page,row,col;
+create table T13 as select 
 A.* ,
 case when B.ans is not null then B.ans when C.ans is not null then C.ans else null end as ans,
 case when B.ans is not null then 1 when C.ans is not null then 2 else 0 end as Vote_Type,
 case when B.Winner_Ratio is not null then B.Winner_Ratio when C.guess_rate is not null then guess_rate else null end as Winner_Ratio,
-case when B.Vote_Cnt is not null then B.Vote_Cnt when C.Vote_Cnt is not null then C.Vote_Cnt else null end as Vote_Cnt,
-case when B.Vote_Correct_Cnt is not null then B.Vote_Correct_Cnt else null end as Vote_Correct_Cnt ,
-D.count as Vote_Error_Cnt 
+case when B.Vote_Cnt is not null then B.Vote_Cnt when C.Vote_Cnt is not null then C.Vote_Cnt else E.count end as Vote_Cnt,
+case when B.Vote_Correct_Cnt is not null then B.Vote_Correct_Cnt else 0 end as Vote_Correct_Cnt ,
+case when D.count is null then 0 else D.count end as Vote_Error_Cnt 
 
 from T as A
 left join T4 as B on (A.page=B.page and A.row=B.row and A.col=B.col)
 left join T10 as C on (A.page=C.page and A.row=C.row and A.col=C.col)
 left join T11 as D on (A.page=D.page and A.row=D.row and A.col=D.col)
+left join T12 as E on (A.page=E.page and A.row=E.row and A.col=E.col)
 ;
 
 -- 輸出
