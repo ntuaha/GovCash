@@ -99,4 +99,4 @@ left join T12 as E on (A.page=E.page and A.row=E.row and A.col=E.col)
 
 -- 輸出
 
-\copy (select page,row,col from t12 where vote_type=0) To '/home/aha/Project/GovCash/res/rerun.csv' With CSV HEADER
+\copy (select page,row,col from t13 where vote_type=0) To '/home/aha/Project/GovCash/res/rerun.csv' With CSV HEADER
