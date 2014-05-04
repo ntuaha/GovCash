@@ -9,7 +9,7 @@ create temporary table T as select distinct page,row,col from govcash_txn order 
 create temporary table UP as select  user_id,count(*) as Input_Cnt from govcash_txn group by user_id;
 
 
-create temporary table B as select page,row,col,user_id,max(txn_no) as max_txn from govcash_txn group by page,row,col,user_id;
+create temporary table B as select page,row,col,user_id,max(txn_no) as max_txn from govcash_txn where ans != 'FFFFFFFFFFFFF' group by page,row,col,user_id;
 create temporary table B2 as select  A.* from govcash_txn as A inner join B on (A.page =B.page and A.row = B.row and A.col=B.col and  A.user_id = B.user_id and A.txn_no = B.max_txn);
 
 

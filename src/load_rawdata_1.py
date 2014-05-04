@@ -48,8 +48,9 @@ class Load_RawData_1:
 
 		f.readline()  #ignore the 1st line in the file
 
-
+		line = 0
 		for row in rows:
+			line = line+1
 			try:
 				
 				[page,row,col,ans,user_id,time] = row
@@ -84,7 +85,8 @@ class Load_RawData_1:
 				elif col =="5":
 				#身分證處理
 					ans = ans.upper()
-					if ans=="":
+					#64/2/5
+					if ans=="" or '政黨證' in ans:
 						pass
 					elif len(ans)<3:
 						ans = "FFFFFFFFFFFFF"
@@ -94,8 +96,10 @@ class Load_RawData_1:
 						ans = ans[0:1]+"********"
 					elif ans.isdigit():
 						#統編要等於8碼
-						if len(ans) != 8:
-							ans = "FFFFFFFFFFFFF"
+						#if len(ans) != 8:
+						#	ans = "FFFFFFFFFFFFF"
+						#有時候是原始資料有誤
+						pass
 					else:
 						ans = "FFFFFFFFFFFFF"
 				
@@ -129,7 +133,11 @@ class Load_RawData_1:
 
 				
 				#print int(time)
-				current_time = datetime.datetime.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M:%S')
+				#因為有些t值不見了
+				if time != "":
+					current_time = datetime.datetime.fromtimestamp(int(time)).strftime('%Y-%m-%d %H:%M:%S')
+				else:
+					current_time = datetime.datetime.fromtimestamp(0).strftime('%Y-%m-%d %H:%M:%S')
 				#print current_time 
 				cur.execute("INSERT INTO %s (page,row,col,ans,original_ans,user_id,time) VALUES (%s,%s,%s,'%s','%s',%s,'%s');"%(self.table,page,row,col,ans,original_ans,user_id,current_time))
 				#print "INSERT INTO GovCash_OCR_TXN (page,row,col,ans,user_id,time) VALUES (%s,%s,%s,'%s',%s,'%s');"%(page,row,col,ans,user_id,current_time)
