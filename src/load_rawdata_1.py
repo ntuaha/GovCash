@@ -33,14 +33,14 @@ class Load_RawData_1:
 		self.port =f.readline()[:-1]
 		self.datasource = datasource
 		f.close()
+
+	def initial_load(self):
+		print '執行重建Table'
+		os.system('psql -d data -f /home/aha/Project/GovCash/sql/createRaw_1.sql')
 		
 	def work(self):
 		self.conn = psycopg2.connect(database=self.database, user=self.user, password=self.password, host=self.host, port=self.port)
 		cur = self.conn.cursor()	
-		try:
-			cur.execute("DELETE FROM %s"%self.table);
-		except:
-			print "%s doesn't exist! "%self.table
 
 		f = open(self.datasource,'r')
 		rows = csv.reader(f, delimiter=',', quotechar='"')
@@ -90,10 +90,10 @@ class Load_RawData_1:
 						pass
 					elif len(ans)<3:
 						ans = "FFFFFFFFFFFFF"
-					elif ans[0].isalpha() and ans[1:2].isdigit():
-						ans = ans[0:2]+"*******"
-					elif ans[0].isalpha() and ans[1].isdigit():
-						ans = ans[0:1]+"********"
+					elif ans[0].isalpha() and ans[1:3].isdigit():
+						ans = ans[0:3]+"*******"
+					elif ans[0].isalpha() and ans[2].isdigit():
+						ans = ans[0:2]+"********"
 					elif ans.isdigit():
 						#統編要等於8碼
 						#if len(ans) != 8:
@@ -113,13 +113,27 @@ class Load_RawData_1:
 						ans = "FFFFFFFFFFFFF"
 
 				elif col == "2":
+					ans = ans.split(" ")[0]
 					ans = ans.replace('／','/')
 					ans = ans.replace('╱','/')
 					result = re.match( r'(\d+/\d+/\d+)', ans, re.M|re.I)
+					#格式檢定
 					if result:
 						pass
 					else:
 						ans = "FFFFFFFFFFFFF"
+					#日期檢定
+
+					dd=ans.split('/')
+					year=dd[0]
+					month=dd[1]
+					day=dd[2]
+					year = int(year)+1911
+					try:
+						datetime.datetime(year=year,month=int(month),day=int(day))
+					except:																						
+						ans = "FFFFFFFFFFFFF"						
+
 				elif col== "8":
 					if ans.find("是") != -1:
 						ans = "是"
@@ -157,5 +171,6 @@ class Load_RawData_1:
 
 if __name__ == '__main__':
 	worker = Load_RawData_1('/home/aha/Project/GovCash/link.info','/home/aha/Data/GovCash/ans.csv')
+	worker.initial_load()
 	worker.work()
 
