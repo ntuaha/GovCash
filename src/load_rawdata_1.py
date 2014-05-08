@@ -119,20 +119,20 @@ class Load_RawData_1:
 					result = re.match( r'(\d+/\d+/\d+)', ans, re.M|re.I)
 					#格式檢定
 					if result:
-						pass
+						#日期檢定
+						dd=ans.split('/')
+						year=dd[0]
+						month=dd[1]
+						day=dd[2]
+						year = int(year)+1911
+						try:
+							datetime.datetime(year=year,month=int(month),day=int(day))
+						except:																						
+							ans = "FFFFFFFFFFFFF"						
 					else:
 						ans = "FFFFFFFFFFFFF"
-					#日期檢定
+					
 
-					dd=ans.split('/')
-					year=dd[0]
-					month=dd[1]
-					day=dd[2]
-					year = int(year)+1911
-					try:
-						datetime.datetime(year=year,month=int(month),day=int(day))
-					except:																						
-						ans = "FFFFFFFFFFFFF"						
 
 				elif col== "8":
 					if ans.find("是") != -1:

@@ -78,13 +78,13 @@ class Transpose:
 							day=dd[2]
 							#print "%s %s|%s|"%(row[0],row[1],row[3])
 							year = int(year)+1911
-							try:
-								datetime.datetime(year=year,month=int(month),day=int(day))
-								txn_dt  = "%d-%02d-%02d"%(year,int(month),int(day))
-								rate = math.log(float(row[5]))
-							except:																						
-								txn_dt='1970-01-01'
-								rate=0
+							#try:
+							#	datetime.datetime(year=year,month=int(month),day=int(day))
+							txn_dt  = "%d-%02d-%02d"%(year,int(month),int(day))
+							rate = math.log(float(row[5]))
+							#except:																						
+							#	txn_dt='1970-01-01'
+							#	rate=0
 						else:
 							txn_dt='1970-01-01'
 							rate=0
