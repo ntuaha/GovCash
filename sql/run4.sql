@@ -19,6 +19,7 @@ EXPLAIN ANALYZE create temporary table BB2 as select  * from (select *,rank() ov
 --create temporary table CBB2 as select  A.* from govcash_txn as A inner join CBB as B on (A.page =B.page and A.row = B.row and A.col=B.col and  A.user_id = B.user_id and A.txn_no = B.max_txn);
 
 create temporary table B3 as select  A.page,A.row,A.col,A.user_id,coalesce(B.ans,A.ans) as ans,a.original_ans,coalesce(B.txn_no,A.txn_no) as txn_no,coalesce(B.time,A.time) as time from BB2 as A left join B2 as B on (A.page =B.page and A.row = B.row and A.col=B.col and  A.user_id = B.user_id);
+drop table B,B2,BB2;
 create table Votes as select * from B3;	
 
 -- 計算答案
@@ -29,7 +30,7 @@ create temporary table A3 as select * from (select *,rank() over (partition by p
 create temporary table A4 as select page,row,col,count(*) as cnt from A3 as A group by page,row,col having count(*)=1;
 create temporary table A6 as select A.* from A3 as A inner join A4 as B on (A.page=B.page and A.row=B.row and A.col=B.col);
 create temporary table A7 as select distinct page,row,col from A6 ;
-
+drop table A,A3,A4;
 
 
 
@@ -68,8 +69,9 @@ create temporary table U5 as select * ,rank() over (order by correct_rate desc,v
 create temporary table U6 as  select user_id, extract(epoch from max(time)-min(time))/60 as diff_time from govcash_txn group by user_id;
 
 create temporary table U7 as  select A.*,B.diff_time as work_time from U5 as A inner join U6 as B on (A.user_id = B.user_id);
-create table UserInfo as select * from U7;	
 
+create table UserInfo as select * from U7;	
+drop table U1,U2,U3,U4,U6,U7;
 -- 計算欄位資料
 create temporary table T2 as select page,row,col,sum(Correct_Ind) as Vote_Correct_Cnt, sum(Error_Ind) as Vote_Error_Cnt, count(page)  as Vote_Cnt from T1 group by page,row,col;
 create temporary table T3 as select *,(Vote_Correct_Cnt::float)/(Vote_Cnt::float) as Winner_Ratio, 1 as Vote_Type from T2 ;
@@ -82,7 +84,9 @@ create temporary table T7 as select page,row,col,ans, 1-exp(sum(log(1-Correct_Ra
 --create temporary table T8 as select page,row,col, max( Guess_Rate)  as max_Guess_Rate from T7 group by page,row,col;
 --create temporary table T9 as select A.* from T7 as A inner join T8  B on (A.page = B.page and A.col = B.col and A.row=B.row and A.Guess_Rate = B.max_Guess_Rate);
 create temporary table T9 as select * from (select *,rank() over (partition by page,row,col order by Guess_rate desc) from T7) as T8 where rank=1;
-create temporary table T10 as select * from T9;
+-- 去除專家決還是無法決定的欄位
+create temporary table T99 as select page,row,col from T9 group by page,row,col having count(*)=1;	
+create temporary table T10 as select A.* from T9 as A inner join T99 as B on (A.page=B.page and A.row=B.row and A.col=B.col);
 
 
 -- 結合表格
@@ -108,7 +112,7 @@ create table TableColumn as select * from t13;
 
 -- 輸出
 
-\copy (select page,row,col from TableColumn where vote_type=0) To '/home/aha/Project/GovCash/data/rerun.csv' With CSV HEADER
-\copy (select * from TableColumn) To '/home/aha/Project/GovCash/data/table_column.csv' With CSV HEADER
-\copy (select * from Votes) To '/home/aha/Project/GovCash/data/vote.csv' With CSV HEADER
-\copy (select * from UserInfo) To '/home/aha/Project/GovCash/data/user_info.csv' With CSV HEADER
+--\copy (select page,row,col from TableColumn where vote_type=0) To '/home/aha/Project/GovCash/data/rerun.csv' With CSV HEADER
+--\copy (select * from TableColumn) To '/home/aha/Project/GovCash/data/table_column.csv' With CSV HEADER
+--\copy (select * from Votes) To '/home/aha/Project/GovCash/data/vote.csv' With CSV HEADER
+--\copy (select * from UserInfo) To '/home/aha/Project/GovCash/data/user_info.csv' With CSV HEADER
