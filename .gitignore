@@ -1,3 +1,4 @@
 link.info
 *.log
 govcash_txn.csv
+votes.csv

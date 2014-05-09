@@ -25,7 +25,7 @@ class Transpose:
 	port=""
 	conn = None
 
-	table = "GovCash_Txn"
+	table = "govcash"
 	def __init__(self,filepath):
 		f = open(filepath,'r')
 		self.database = f.readline()[:-1]
@@ -37,7 +37,8 @@ class Transpose:
 
 	def initial_load(self,file):
 		print '執行重建Table'
-		os.system('psql -d %s -f %s'%(self.table,file)
+		os.system('psql -d %s -f %s'%(self.database,file))
+		
 		
 	def work(self):
 		

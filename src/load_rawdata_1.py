@@ -155,7 +155,7 @@ class Load_RawData_1:
 				#print current_time 
 				cur.execute("INSERT INTO %s (page,row,col,ans,original_ans,user_id,time) VALUES (%s,%s,%s,'%s','%s',%s,'%s');"%(self.table,page,row,col,ans,original_ans,user_id,current_time))
 				#print "INSERT INTO %s (page,row,col,ans,user_id,time) VALUES (%s,%s,%s,'%s',%s,'%s');"%(self.table,page,row,col,ans,user_id,current_time)
-				if line%1000:
+				if line%100000==0:
 					self.conn.commit()
 			except ValueError as e:
 				print "%s : %s"%(e,line)
