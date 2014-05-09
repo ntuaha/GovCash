@@ -112,7 +112,7 @@ create table TableColumn as select * from t13;
 
 -- 輸出
 
---\copy (select page,row,col from TableColumn where vote_type=0) To '/home/aha/Project/GovCash/data/rerun.csv' With CSV HEADER
---\copy (select * from TableColumn) To '/home/aha/Project/GovCash/data/table_column.csv' With CSV HEADER
---\copy (select * from Votes) To '/home/aha/Project/GovCash/data/vote.csv' With CSV HEADER
---\copy (select * from UserInfo) To '/home/aha/Project/GovCash/data/user_info.csv' With CSV HEADER
+\copy (select page,row,col from TableColumn where vote_type=0) To '/home/aha/Project/GovCash/data/rerun.csv' With CSV HEADER
+\copy (select * from TableColumn) To '/home/aha/Project/GovCash/data/table_column.csv' With CSV HEADER
+\copy (select * from Votes) To '/home/aha/Project/GovCash/data/votes.csv' With CSV HEADER
+\copy (select * from UserInfo) To '/home/aha/Project/GovCash/data/user_info.csv' With CSV HEADER

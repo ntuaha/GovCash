@@ -34,9 +34,9 @@ class Load_RawData_1:
 		self.datasource = datasource
 		f.close()
 
-	def initial_load(self):
+	def initial_load(self,sql):
 		print '執行重建Table'
-		os.system('psql -d data -f /home/aha/Project/GovCash/sql/createRaw_1.sql')
+		os.system('psql -d %s -f %s'%(self.database,sql))
 		
 	def work(self):
 		self.conn = psycopg2.connect(database=self.database, user=self.user, password=self.password, host=self.host, port=self.port)
@@ -154,7 +154,9 @@ class Load_RawData_1:
 					current_time = datetime.datetime.fromtimestamp(0).strftime('%Y-%m-%d %H:%M:%S')
 				#print current_time 
 				cur.execute("INSERT INTO %s (page,row,col,ans,original_ans,user_id,time) VALUES (%s,%s,%s,'%s','%s',%s,'%s');"%(self.table,page,row,col,ans,original_ans,user_id,current_time))
-				#print "INSERT INTO GovCash_OCR_TXN (page,row,col,ans,user_id,time) VALUES (%s,%s,%s,'%s',%s,'%s');"%(page,row,col,ans,user_id,current_time)
+				#print "INSERT INTO %s (page,row,col,ans,user_id,time) VALUES (%s,%s,%s,'%s',%s,'%s');"%(self.table,page,row,col,ans,user_id,current_time)
+				if line%1000:
+					self.conn.commit()
 			except ValueError as e:
 				print "%s : %s"%(e,line)
 				error.write("%s"%(line))
@@ -170,7 +172,7 @@ class Load_RawData_1:
 
 
 if __name__ == '__main__':
-	worker = Load_RawData_1('/home/aha/Project/GovCash/link.info','/home/aha/Data/GovCash/ans.csv')
-	worker.initial_load()
+	worker = Load_RawData_1('/home/aha/Project/GovCash/link.info',sys.argv[1])
+	worker.initial_load(sys.argv[2])
 	worker.work()
 

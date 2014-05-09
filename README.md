@@ -4,9 +4,10 @@ GovCash
 找出政治獻金有趣的地方
 
 #資料來源
-[ronnywang](http://ronny.tw/)
-[G0V政治獻金資料庫](http://campaign-finance.g0v.lackneets.tw/)
-[G0V政治獻金數位化](http://campaign-finance.g0v.ctiml.tw/)
+
+- [ronnywang](http://ronny.tw/)
+- [G0V政治獻金資料庫](http://campaign-finance.g0v.lackneets.tw/)
+- [G0V政治獻金數位化](http://campaign-finance.g0v.ctiml.tw/)
 
 #相關來源
 [政治獻金API](http://campaign-finance.g0v.ronny.tw/)
@@ -16,13 +17,11 @@ GovCash
 
 #資料清理
 
-
-
-1.包含去除不符合欄位格式的資料以及不符合欄位應有數值輸入
-2.請參考[src/load_rawdata_1.py](https://github.com/ntuaha/GovCash/blob/master/src/load_rawdata_1.py)
-3.去除日期不符合應有的格式
-4.數字的全半形轉換
-5.col=8 限制只能**是, 否, 空白**
+1. 包含去除不符合欄位格式的資料以及不符合欄位應有數值輸入
+2. 請參考 [src/load_rawdata_1.py](https://github.com/ntuaha/GovCash/blob/master/src/load_rawdata_1.py)
+3. 去除日期不符合應有的格式
+4. 數字的全半形轉換
+5. **col=8** 限制只能**是, 否, 空白**
 
 
 
