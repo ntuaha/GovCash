@@ -37,7 +37,7 @@ class Transpose:
 
 	def initial_load(self,file):
 		print '執行重建Table'
-		os.system('psql -d data -f %s'%file)
+		os.system('psql -d %s -f %s'%(self.table,file)
 		
 	def work(self):
 		
@@ -169,6 +169,6 @@ class Transpose:
 
 if __name__ == '__main__':
 	worker = Transpose('/home/aha/Project/GovCash/link.info')
-	worker.initial_load('/home/aha/Project/GovCash/sql/CashGov.sql')
+	worker.initial_load(sys.argv[1])
 	worker.work()
 
