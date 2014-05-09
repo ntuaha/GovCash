@@ -14,13 +14,15 @@ GovCash
 #資料表格式
 [Google Doc](https://docs.google.com/spreadsheets/d/15TwXSiI1enBaMWv0WeHTZ3FbLPEmKEAWYGNszDaJXhk/edit#gid=0)
 
-#資料清理（包含去除不符合欄位格式的資料以及不符合欄位應有數值輸入)
+#資料清理
 
 
-1.請參考[src/load_rawdata_1.py](https://github.com/ntuaha/GovCash/blob/master/src/load_rawdata_1.py)
-2.去除日期不符合應有的格式
-3.數字的全半形轉換
-3.col=8 限制只能**是, 否, 空白**
+
+1.包含去除不符合欄位格式的資料以及不符合欄位應有數值輸入
+2.請參考[src/load_rawdata_1.py](https://github.com/ntuaha/GovCash/blob/master/src/load_rawdata_1.py)
+3.去除日期不符合應有的格式
+4.數字的全半形轉換
+5.col=8 限制只能**是, 否, 空白**
 
 
 
@@ -41,4 +43,4 @@ GovCash
 - 原始監察院也有提供不合理的欄位，並非網友輸入有誤（例如：公司統編應為８碼，但卻看見原始資料有超過８碼的可能性)
 - 可參閱 [run4.sql](https://github.com/ntuaha/GovCash/blob/master/sql/run4.sql)
 
-#有任何問題請直接回報，會加緊除錯提供更完整的資料表
+###有任何問題請直接回報，會加緊除錯提供更完整的資料表
