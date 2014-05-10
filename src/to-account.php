@@ -12,11 +12,13 @@ class ToAccount
         $tables = json_decode($ret)->data;
 
         $page_map = array();
+        $type_map = array();
         foreach ($tables as $table) {
             $file = $table->file;
-            list($name) = explode('-', $file);
+            list($name, $type) = explode('-', $file);
             $id = $table->id;
             $page_map[$id] = $name;
+            $type_map[$id] = $type;
         }
 
         $files = array();
@@ -34,6 +36,9 @@ class ToAccount
             if (!$files[$name]) {
                 $files[$name] = fopen("../accounts/{$name}.csv", "w");
                 fputcsv($files[$name], $columns);
+            }
+            if (!in_array($type_map[$rows[1]], array('收入', '支出', '收入支出'))) {
+                $rows[4] = $type_map[$rows[1]];
             }
             fputcsv($files[$name], array_slice($rows, 3, -2));
         }
