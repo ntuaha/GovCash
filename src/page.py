@@ -58,9 +58,21 @@ class Page:
 			#Debug
 			#print "line:%s"%row['file']
 			lists = row['file'].split("-")
-			f = lists[0]
+			
+			f = lists[0].replace('七','7').replace('八','8').replace('十','10').replace('、',',')
+			'''
+			p = re.compile('第(\d+)[屆|任](.+)擬參選人(.+)政治獻金專戶',re.IGNORECASE|re.UNICODE|re.X)
+			m = p.match(f)
+			print f
+			term = int(m.groups(1))
+			position = m.groups(2)
+			account = m.groups(3)
+			print "%d, %s, %s"%(term,position,account)
+'''
+
+
 			if len(lists)>1:
-				txn_code = lists[1].split(".")[0]
+				txn_code = "'"+lists[1].split(".")[0]+"'"
 			else:
 				txn_code ="NULL"
 
@@ -102,7 +114,8 @@ class Page:
 			tables_api_url = row['tables_api_url']
 			
 			
-			sql = "INSERT INTO %s (file,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id) VALUES ('%s',%d,'%s',%d,%d,%d,'%s',%s,%s,'%s',%d)" %(self.table,f,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id)
+			#sql = "INSERT INTO %s (file,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id,account,position,term) VALUES ('%s',%d,'%s',%d,%d,%d,'%s',%s,%s,%s,%d,'%s','%s',%d)" %(self.table,f,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id,account,posistion,term)
+			sql = "INSERT INTO %s (file,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id) VALUES ('%s',%d,'%s',%d,%d,%d,'%s',%s,%s,%s,%d)" %(self.table,f,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id)
 			#Debug
 			#print sql
 			cur.execute(sql)

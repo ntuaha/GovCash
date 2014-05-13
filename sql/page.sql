@@ -11,5 +11,8 @@ id	bigint,
 tables_api_url	varchar,
 from_txndt timestamp,
 to_txndt timestamp,
-txn_code varchar
+txn_code varchar,
+account varchar,
+position varchar,
+term int
 )

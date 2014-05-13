@@ -111,7 +111,11 @@ class Load_RawData_1:
 						pass
 					elif ans.isdigit() ==False:
 						ans = "FFFFFFFFFFFFF"
-
+				elif col == "3":
+					result = re.match( r'([0-9a-zA-Z,\(\)\*\\/\.\]\[]+)', ans, re.M|re.I)
+					if result or len(ans)<12:
+						ans = "FFFFFFFFFFFFF"	
+					
 				elif col == "2":
 					ans = ans.split(" ")[0]
 					ans = ans.replace('／','/')
@@ -127,6 +131,7 @@ class Load_RawData_1:
 						year = int(year)+1911
 						try:
 							datetime.datetime(year=year,month=int(month),day=int(day))
+							ans="%d/%02d/%02d"%(year-1911,int(month),int(day))
 						except:																						
 							ans = "FFFFFFFFFFFFF"						
 					else:

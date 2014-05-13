@@ -25,7 +25,7 @@ class Transpose:
 	port=""
 	conn = None
 
-	table = "govcash"
+	table = "govcash_pre"
 	def __init__(self,filepath):
 		f = open(filepath,'r')
 		self.database = f.readline()[:-1]
@@ -67,7 +67,7 @@ class Transpose:
 		f = open("TEST.log","w+")
 		while 1:
 			print "Processing...       [%d,%d,%0.2f%%]"%(start_index,count,(float(start_index)/float(count)))
-			cur.execute("SELECT * from tablecolumn where page<>0 and row <>1 order by page,row,col limit %d offset %d"%(jump_size,start_index))
+			cur.execute("SELECT A.* from tablecolumn as A where page<>0 and row <>1 order by page,row,col limit %d offset %d"%(jump_size,start_index))
 			rows = cur.fetchall()
 			for row in rows:
 				try:
@@ -147,8 +147,8 @@ class Transpose:
 						else:
 							rate=0
 						rate1 = math.exp(rate1)
-						sql = "INSERT INTO govcash (page,row,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,area,correct_rate,correct_rate_imp) VALUES (%d,%d,'%s','%s','%s','%s',%s,%s,'%s','%s',%f,%f);"%(page,r,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,ans,rate,rate1)
-						f.write("%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%f,%f\n"%(page,r,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,ans,rate,rate1))
+						sql = "INSERT INTO govcash_pre (page,row,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,area,correct_rate,correct_rate_imp) VALUES (%d,%d,'%s','%s','%s','%s',%s,%s,'%s','%s',%f,%f);"%(page,r,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,ans,rate,rate1)
+						#f.write("%d,%d,%s,%s,%s,%s,%s,%s,%s,%s,%f,%f\n"%(page,r,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,ans,rate,rate1))
 						#print sql
 						cur.execute(sql)
 						self.conn.commit()
