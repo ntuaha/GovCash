@@ -9,6 +9,10 @@ GovCash
 2. 共有  21397  User
 3. 3215688 筆資料
 
+#初步分析
+
+1. [人事費用支出 500,1000 總和統計] (https://github.com/ntuaha/GovCash/blob/master/analysis/walker.py)
+
 #資料來源
 
 - [ronnywang](http://ronny.tw/)
