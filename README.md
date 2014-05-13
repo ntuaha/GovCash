@@ -11,7 +11,7 @@ GovCash
 
 #初步分析
 
-1. [人事費用支出 500,1000 總和統計] (https://github.com/ntuaha/GovCash/blob/master/analysis/walker.py)
+1. [人事費用支出 500,1000 總和統計] (https://github.com/ntuaha/GovCash/blob/master/analysis/walker.csv)
 
 #資料來源
 
