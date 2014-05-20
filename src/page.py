@@ -37,9 +37,10 @@ class Page:
 		self.port =f.readline()[:-1]
 		f.close()
 
-	def initial_load(self,file):
+	def initial_load(self,file,canditate):
 		print '執行重建Table'
 		os.system('psql -d %s -f %s'%(self.database,file))
+		os.system('psql -d %s -f %s'%(self.database,canditate))
 		print '下載更新檔案'
 		#os.system('wget http://campaign-finance.g0v.ronny.tw/api/gettables -O  $s'%self.filepath)
 		
@@ -60,6 +61,51 @@ class Page:
 			lists = row['file'].split("-")
 			
 			f = lists[0].replace('七','7').replace('八','8').replace('十','10').replace('、',',')
+			f = re.sub(r'第(九)[屆|任]', '9',f, flags=re.IGNORECASE)
+			m = re.match(u'第(\d+)[屆|任](.+)擬參選人(.+)政治獻金專戶',f,flags=re.IGNORECASE|re.UNICODE|re.X)
+			term = int(m.group(1))
+			position = m.group(2).split(',')
+			p1 = position[0]
+			if len(position) ==2:
+				p2 = "'"+position[1]+"'"
+			else:
+				p2 = 'Null'
+			alist = m.group(3).split(',')
+			a1= alist[0]
+			if len(alist) == 2:
+				a2 = "'"+alist[1]+"'"
+			else:
+				a2 = 'Null'
+			#Find out Candidate_no
+			if p2 == "Null" or a2 =="Null":
+				sql = "SELECT candidate_no from candidate where account1 = '%s' and term=%d and position1='%s' "%(a1,term,p1)	
+			else:
+				sql = "SELECT candidate_no from candidate where account1 = '%s' and account2=%s and term=%d and position1='%s' and position2=%s "%(a1,a2,term,p1,p2)	
+			cur.execute(sql)
+			rows =  cur.fetchall()
+			run = True
+			candidate_no = -1
+			for subrow in rows:
+				run  = False
+				candidate_no = subrow[0]
+			if run:
+				sql = "INSERT INTO candidate (term,position1,position2,account1,account2) VALUES (%d,'%s',%s,'%s',%s);" %(term,p1,p2,a1,a2)	
+				
+				cur.execute(sql)
+				self.conn.commit()
+				if p2 == "Null" or a2 =="Null":
+					sql = "SELECT candidate_no from candidate where account1 = '%s' and term=%d and position1='%s' "%(a1,term,p1)	
+				else:
+					sql = "SELECT candidate_no from candidate where account1 = '%s' and account2=%s and term=%d and position1='%s' and position2=%s "%(a1,a2,term,p1,p2)		
+				
+				cur.execute(sql)
+				candidate_no =  cur.fetchall()[0][0]
+
+
+
+
+
+			
 			'''
 			p = re.compile('第(\d+)[屆|任](.+)擬參選人(.+)政治獻金專戶',re.IGNORECASE|re.UNICODE|re.X)
 			m = p.match(f)
@@ -112,15 +158,9 @@ class Page:
 				reverse = 0
 			id = int(row['id'])
 			tables_api_url = row['tables_api_url']
-			
-			
-			#sql = "INSERT INTO %s (file,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id,account,position,term) VALUES ('%s',%d,'%s',%d,%d,%d,'%s',%s,%s,%s,%d,'%s','%s',%d)" %(self.table,f,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id,account,posistion,term)
-			sql = "INSERT INTO %s (file,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id) VALUES ('%s',%d,'%s',%d,%d,%d,'%s',%s,%s,%s,%d)" %(self.table,f,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id)
-			#Debug
-			#print sql
+			#塞入資料		
+			sql = "INSERT INTO %s (file,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id,candidate_no) VALUES ('%s',%d,'%s',%d,%d,%d,'%s',%s,%s,%s,%d,%d)" %(self.table,f,page,pic_url,pic_width,pic_height,reverse,tables_api_url,from_txndt,to_txndt,txn_code,id,candidate_no)
 			cur.execute(sql)
-		#print '輸出檔案'
-		#cur.execute("\copy (select * from %s) To '/home/aha/Project/GovCash/data/%s.csv' With CSV HEADER"%(self.table,self.table))
 		self.conn.commit()
 		self.conn.close()
 		print "FINISH"
@@ -130,6 +170,6 @@ class Page:
 
 if __name__ == '__main__':
 	worker = Page('/home/aha/Project/GovCash/link.info')
-	worker.initial_load(sys.argv[1])
+	worker.initial_load(sys.argv[1],sys.argv[2])
 	worker.work()
 

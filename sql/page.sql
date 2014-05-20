@@ -12,7 +12,5 @@ tables_api_url	varchar,
 from_txndt timestamp,
 to_txndt timestamp,
 txn_code varchar,
-account varchar,
-position varchar,
-term int
+candidate_no int
 )

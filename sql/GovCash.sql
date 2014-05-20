@@ -15,20 +15,13 @@ cash_ind	varchar,
 area	varchar,
 correct_rate real,
 correct_rate_imp real,
-file varchar,
-account varchar,
-position varchar,
-term int
-
+candidate_no int
 );
-insert into govcash (page,row,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,area,correct_rate,correct_rate_imp,file,main_txn_code,account,position,term)  (select  
+insert into govcash (page,row,txn_dt,txn_code,user_nm,id,receive_money,pay_money,cash_ind,area,correct_rate,correct_rate_imp,candidate_no)  (select  
 A.page,A.row,A.txn_dt ,A.txn_code,A.user_nm,A.id,A.receive_money,A.pay_money,A.cash_ind,  
-A.area, A.correct_rate,A.correct_rate_imp ,B.file,B.txn_code as main_txn_code,B.account,B.position,B.term from govcash_pre as A left join page as B on (A.page = B.id) order by page,row);
+A.area, A.correct_rate,A.correct_rate_imp ,B.candidate_no from govcash_pre as A left join page as B on (A.page = B.id) order by page,row);
 
-
-
-
-\copy (select account,position,term,page,row,to_char(txn_dt,'YYYY-MM-DD') as txn_dt,main_txn_code,txn_code,user_nm,id,receive_money,pay_money,cash_ind,area,to_char(correct_rate,'0D999') as correct_rate,to_char(correct_rate_imp,'0D999') as correct_rate_imp from govcash order by page,row) To '/home/aha/Project/GovCash/data/govcash.csv' With CSV HEADER
+\copy (select candidate_no,page,row,to_char(txn_dt,'YYYY-MM-DD') as txn_dt,main_txn_code,txn_code,user_nm,id,receive_money,pay_money,cash_ind,area,to_char(correct_rate,'0D999') as correct_rate,to_char(correct_rate_imp,'0D999') as correct_rate_imp from govcash order by page,row) To '/home/aha/Project/GovCash/data/govcash.csv' With CSV HEADER
 
 
 
