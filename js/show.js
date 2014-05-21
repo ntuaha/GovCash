@@ -113,19 +113,26 @@ var makeBar = function(width, height, bar_data) {
 $(function(){
 
 
-  var WIDTH = $("canvas-svg").width();
-
-
-
-  var margin = {top: 70, right: 20, bottom: 30, left: 60},
-      width = WIDTH - margin.left - margin.right,
-      height = WIDTH - margin.top - margin.bottom;
-  var width = width / data.length - 10;
-
-
-
-  width = width > 180 ? width : 180;
+ 
   d3.json("./data/pay_and_rec.json",function(data){
+
+
+     var WIDTH = $("canvas-svg").width();
+
+
+
+      var margin = {top: 70, right: 20, bottom: 30, left: 60},
+          width = WIDTH - margin.left - margin.right,
+          height = WIDTH - margin.top - margin.bottom;
+      var width = width / data.length - 10;
+
+
+
+      width = width > 180 ? width : 180;
+
+
+
+    
     var keys = Object.keys(data[0]);
     for (var i = 0; i < keys.length; i++) {
       if (keys[i] !== "chart_title" && keys[i] !== "unit") {
