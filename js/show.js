@@ -40,7 +40,7 @@ var makeBar = function(width, height, bar_data) {
       .orient("left")
       .tickFormat(Y_DATA_FORMAT);
   
-  var value_data = bar_data.map(groups, function(d) {
+  var value_data = d3.map(groups, function(d) {
     return {x_axis: d, y_axis: bar_data[d]};
   });
   
