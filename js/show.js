@@ -16,7 +16,7 @@ var COLOR_2 = "#d62728";
 
 var groups = [];
 
-var makeBar = function(width, height, bar_data) {
+var makeBar = function(width, height,margin, bar_data) {
   var Y_DATA_FORMAT = d3.format("");
   
   var Y_AXIS_LABEL = bar_data.unit;
@@ -114,7 +114,6 @@ var makeBar = function(width, height, bar_data) {
           .style("opacity", 1.0);
       });
 };
-var margin=0;
 $(function(){
 
 
@@ -126,7 +125,7 @@ $(function(){
 
 
 
-    margin = {top: 70, right: 20, bottom: 30, left: 60},
+    var margin = {top: 70, right: 20, bottom: 30, left: 60},
     var width = WIDTH - margin.left - margin.right,
     var height = WIDTH - margin.top - margin.bottom;
     width = width / data.length - 10;
@@ -146,7 +145,7 @@ $(function(){
     }
 
     for (i = 0; i < data.length; i++) {
-      makeBar(width, width, data[i]);
+      makeBar(width, width,margin data[i]);
     }
   });
 
