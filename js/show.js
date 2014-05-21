@@ -145,7 +145,7 @@ $(function(){
     }
 
     for (i = 0; i < data.length; i++) {
-      makeBar(width, width,margin data[i]);
+      makeBar(width, width,margin, data[i]);
     }
   });
 
