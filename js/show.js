@@ -128,7 +128,7 @@ $(function(){
 
 
 
-    var margin = {top: 70, right: 20, bottom: 30, left: 60};
+    var margin = {top: 70, right: 60, bottom: 30, left: 100};
     var width = WIDTH - margin.left - margin.right;
     var height = WIDTH - margin.top - margin.bottom;
     width = width / data.length - 10;
