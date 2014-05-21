@@ -40,7 +40,7 @@ var makeBar = function(width, height, bar_data) {
       .orient("left")
       .tickFormat(Y_DATA_FORMAT);
   
-  var value_data = _.map(groups, function(d) {
+  var value_data = bar_data.map(groups, function(d) {
     return {x_axis: d, y_axis: bar_data[d]};
   });
   
@@ -132,7 +132,7 @@ $(function(){
 
 
 
-    
+
     var keys = Object.keys(data[0]);
     for (var i = 0; i < keys.length; i++) {
       if (keys[i] !== "chart_title" && keys[i] !== "unit") {
