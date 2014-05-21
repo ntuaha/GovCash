@@ -6,11 +6,11 @@ var COLOR_1 = "#1f77b4";
 
 var COLOR_2 = "#d62728";
 
-var X_DATA_PARSE = vida.string;
+//var X_DATA_PARSE = vida.string;
 
-var Y_DATA_PARSE = vida.number;
+//var Y_DATA_PARSE = vida.number;
 
-var Y_DATA_FORMAT = d3.format("");
+//var Y_DATA_FORMAT = d3.format("");
 
 
 
