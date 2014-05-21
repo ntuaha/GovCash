@@ -114,6 +114,7 @@ var makeBar = function(width, height, bar_data) {
           .style("opacity", 1.0);
       });
 };
+var margin=0;
 $(function(){
 
 
@@ -125,10 +126,10 @@ $(function(){
 
 
 
-      var margin = {top: 70, right: 20, bottom: 30, left: 60},
-          width = WIDTH - margin.left - margin.right,
-          height = WIDTH - margin.top - margin.bottom;
-      var width = width / data.length - 10;
+    margin = {top: 70, right: 20, bottom: 30, left: 60},
+    var width = WIDTH - margin.left - margin.right,
+    var height = WIDTH - margin.top - margin.bottom;
+    width = width / data.length - 10;
 
 
 
