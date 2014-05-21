@@ -44,7 +44,11 @@ var makeBar = function(width, height, bar_data) {
     return {x_axis: d, y_axis: bar_data[d]};
   });
   
-  x.domain(value_data.map(function(d) { return d.x_axis; }));
+
+
+
+
+  x.domain(d3.map(value_data, function(d) { return d.x_axis; }));
   y.domain([0, d3.max(value_data, function(d) { return d.y_axis; })]);
 
   var svg = d3.select("#canvas-svg").append("svg")
