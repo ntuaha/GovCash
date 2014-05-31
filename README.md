@@ -57,11 +57,11 @@ GovCash
 - 建議安裝**postgresql** 
 - 執行將政治獻金每個頁面代表的候選人資訊讀入
 ```sh
-python ./src/page.py
+python [絕對路徑]/src/page.py
 ```
 - 開始清理資料內容
 ```sh
-python ./src/load_rawdata_1.py [絕對路徑]/data/govcash_txn.csv [絕對路徑]/sql/createRaw_1.sql
+python [絕對路徑]/src/load_rawdata_1.py [絕對路徑]/data/govcash_txn.csv [絕對路徑]/sql/createRaw_1.sql
 ```
 
 
