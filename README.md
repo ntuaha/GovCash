@@ -54,12 +54,12 @@ GovCash
 
 # 執行流程
 
-1. 建議安裝**postgresql** 
-2. 執行將政治獻金每個頁面代表的候選人資訊讀入
+- 建議安裝**postgresql** 
+- 執行將政治獻金每個頁面代表的候選人資訊讀入
 ```sh
 python ./src/page.py
 ```
-3. 開始清理資料內容
+- 開始清理資料內容
 ```sh
 python ./src/load_rawdata_1.py [絕對路徑]/data/govcash_txn.csv [絕對路徑]/sql/createRaw_1.sql
 ```
@@ -67,14 +67,14 @@ python ./src/load_rawdata_1.py [絕對路徑]/data/govcash_txn.csv [絕對路徑
 
 
 
-4. 設定好資料庫之後執行
+- 設定好資料庫之後執行
 
 ```sh
-psql -d [library] -f ./sql/run4.sql
+psql -d [library] -f [絕對路徑]/sql/run4.sql
 ```
 之後會建立出以下表格，相關表格資訊可以到[Google Doc](https://docs.google.com/spreadsheets/d/15TwXSiI1enBaMWv0WeHTZ3FbLPEmKEAWYGNszDaJXhk/edit#gid=0)
 
-5. 接著
+- 接著
 
 - UserInfo
 - TableColumn
@@ -82,21 +82,21 @@ psql -d [library] -f ./sql/run4.sql
 - govcash_txn_ext
 - govcash_txn2
 
-此外為了輸出檔案到指定的目錄下，請先修改`./sql/run4.sql`的輸出區塊
+此外為了輸出檔案到指定的目錄下，請先修改`[絕對路徑]/sql/run4.sql`的輸出區塊
 
-6. 已辨識完欄位整併
+- 已辨識完欄位整併
 
 ```sh
 python transpose.py [絕對路徑]/sql/GovCash_pre.sql
 ```
 
-7. 最後整理，添加每個**page**的說明與對應的候選人資訊
+- 最後整理，添加每個**page**的說明與對應的候選人資訊
 
 ```sh
-psql -d govcash -f ../sql/GovCash.sql
+psql -d govcash -f [絕對路徑]/sql/GovCash.sqls
 ```
 
-8. 完成，開始利用**GovCash**這張表格做分析吧
+- 完成，開始利用**GovCash**這張表格做分析吧
 
 
 
