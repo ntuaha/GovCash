@@ -27,7 +27,7 @@ class PAYANDREC:
 	host=""
 	port=""
 	conn = None
-	filepath = '/home/aha/Project/GovCash/data/pay_and_rec.json'
+	filepath = '/home/aha/Project/GovCash/data/pay_and_rec.csv'
 	table = "page"
 	def __init__(self,filepath):
 		f = open(filepath,'r')
@@ -51,25 +51,30 @@ class PAYANDREC:
 		sql = "select A.candidate_no,sum(receive_money) as r , sum(pay_money) as p,B.account1,B.position1,term from govcash as A left join candidate as B on (A.candidate_no = B.candidate_no) group by A.candidate_no,B.account1,B.position1,term;"	
 		cur.execute(sql)
 		rows =  cur.fetchall()
-		f.write("[\n");
+		#f.write("[\n");
 		data=[]
+		f.write("No,r,p,account1,position1,term\n")
 		for row in rows:
+			#序號, 收入, 支出, 帳號, 位置, 屆數
 			[g0,g1,g2,g3,g4,g5] = row
-			print row
+			#print row
 			if row[2] == None:
-				g2 = -1
+				g2 = "0"
 			if row[1] == None:
-				g1 = -1
+				g1 = "0"
 			if row[3] == None:
 				g3 = "無名"
 			if row[4] == None:
 				g4 = "無名"
 			if row[5] == None:
-				g5 = 0
-			d = "{\"chart_title\": \"第%d屆%s-%s\",\"unit\": \"百萬\",\"支出\": %0.2f,\"收入\":%0.2f}\n"%(int(g5),g4,g3,int(g2)/1e6,int(g1)/1e6)
-			data.append(d)
-		string = ",".join(data)
-		f.write("%s]"%string)
+				g5 = "0"
+			#d = "{\"chart_title\": \"第%d屆%s-%s\",\"unit\": \"百萬\",\"支出\": %0.2f,\"收入\":%0.2f}\n"%(int(g5),g4,g3,int(g2)/1e6,int(g1)/1e6)
+			#data.append(d)
+			d = [str(g0),str(int(g1)),str(int(g2)),g3,g4,str(int(g5))]
+			print d
+			f.write(",".join(d)+"\n")
+		#string = ",".join(data)
+		#f.write("%s]"%string)
 
 
 

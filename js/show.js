@@ -151,7 +151,14 @@ $(function(){
       makeBar(width, width,margin, data[i]);
     }
   });
-
+  // Begin of Settings
+  $(".navbar-header .navbar-brand").attr("href",NAVBAR_BRNAD_LINK).html(NAVBAR_BRAND);
+  $(".navbar-nav a:contains('圖表資料來源')").attr("href",FIGURES_DATA_SRC_LINK);
+  $(".dropdown-menu a:contains('提供者')").attr("href",RAW_DATA_PROVIDER_LINK).html("提供者-"+RAW_DATA_PROVIDER_NAME);
+  $(".dropdown-menu a:contains('資料產生網站')").attr("href",RAW_DATA_PROVIDER_WEBSITE_LINK).html("資料產生網站-"+RAW_DATA_PROVIDER_WEBSITE_NAME);
+  $(".dropdown-menu a:contains('資料整理')").attr("href",DATA_ETL_WEBSITE_LINK).html("資料整理-"+DATA_ETL_WEBSITE_NAME);
+  $(".navbar-nav a:contains('@aha')").attr("href",CONTACT_ME);
+  // End of Settings
 
 
 
