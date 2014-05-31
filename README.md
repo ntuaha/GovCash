@@ -52,4 +52,27 @@ GovCash
 - 原始監察院也有提供不合理的欄位，並非網友輸入有誤（例如：公司統編應為８碼，但卻看見原始資料有超過８碼的可能性)
 - 可參閱 [run4.sql](https://github.com/ntuaha/GovCash/blob/master/sql/run4.sql)
 
+# 執行流程
+
+1. 建議安裝**postgresql** 
+2. 設定好資料庫之後執行
+
+```sh
+psql -d [library] -f ./sql/run4.sql
+```
+之後會建立出以下表格，相關表格資訊可以到[Google Doc](https://docs.google.com/spreadsheets/d/15TwXSiI1enBaMWv0WeHTZ3FbLPEmKEAWYGNszDaJXhk/edit#gid=0)
+
+- UserInfo
+- TableColumn
+- Votes
+- govcash_txn_ext
+- govcash_txn2
+
+此外為了輸出檔案到指定的目錄下，請先修改`./sql/run4.sql`的輸出區塊
+
+
+
+
+
+
 ###有任何問題請直接回報，會加緊除錯提供更完整的資料表
