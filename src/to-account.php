@@ -25,7 +25,7 @@ class ToAccount
         $fp = fopen('../data/govcash.csv', 'r');
         fgetcsv($fp); // columns
 
-        $columns = array('交易日期', '收支科目', '捐贈者/支出對象', '身份證/統一編', '收入金額', '支出金額', '金錢類', '地址');
+        $columns = array('交易日期', '收支科目', '捐贈者/支出對象', '身份證/統一編', '收入金額', '支出金額', '金錢類', '地址', '原始文件頁碼', '原始文件行號');
 
         while ($rows = fgetcsv($fp)) {
             if (!$name = $page_map[$rows[1]]) {
@@ -40,7 +40,7 @@ class ToAccount
             if (!in_array($type_map[$rows[1]], array('收入', '支出', '收入支出'))) {
                 $rows[4] = $type_map[$rows[1]];
             }
-            fputcsv($files[$name], array_slice($rows, 3, -2));
+            fputcsv($files[$name], array_merge(array_slice($rows, 3, -2), array($rows[1], $rows[2])));
         }
     }
 }
