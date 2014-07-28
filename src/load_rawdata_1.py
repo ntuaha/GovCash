@@ -41,7 +41,6 @@ class Load_RawData_1:
 	def work(self):
 		self.conn = psycopg2.connect(database=self.database, user=self.user, password=self.password, host=self.host, port=self.port)
 		cur = self.conn.cursor()	
-
 		f = open(self.datasource,'r')
 		rows = csv.reader(f, delimiter=',', quotechar='"')
 		error = open('./error.log','w+')
