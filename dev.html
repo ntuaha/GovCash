@@ -20,7 +20,7 @@
           success:function(r){
             Parse.initialize("IzQjJlCMrbf28ECznGwhrhX3OhmBJcFO8umPd1qs", "gLvtIDjBgQBTlcJN4cw2X4t5byJqarbt1XISXw9z");
             for (var x in r){
-              $("body").append("<div>"+x+"</div>");
+              $("body").append("<div>"+r[x]+"</div>");
             }
             /*
             var ScatterObject = Parse.Object.extend("ScatterObject");
