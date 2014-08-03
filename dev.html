@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="_yAuO_sJCBII44yZfYWqXZPeJ-oIsqlIFDI04oLskvQ" />
+    <title>政治獻金資料上傳</title>
+	  <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="//www.parsecdn.com/js/parse-1.2.19.min.js"></script>
+    <!-- Bootstrap -->
+    <link href="./bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- D3 -->
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js" charset="utf-8"></script>
+    <script>
+      $(function(){
+        $.ajax({
+          url:"./data/pay_and_rec.json",
+          dataType:"json",
+          success:function(r){
+            Parse.initialize("IzQjJlCMrbf28ECznGwhrhX3OhmBJcFO8umPd1qs", "gLvtIDjBgQBTlcJN4cw2X4t5byJqarbt1XISXw9z");
+            for (var x in r){
+              $("body").append("<div>"+x+"</div>");
+            }
+            /*
+            var ScatterObject = Parse.Object.extend("ScatterObject");
+            var testObject = new ScatterObject();
+            testObject.save(r).then(function(object) {
+              alert("yay! it worked");
+            });
+          */
+          }
+        })
+        
+      });
+      
+
+    </script>
+	
+  </head>
+  <body>
+  	
+  </body>
+</html>
+
