@@ -36,7 +36,7 @@
             
           var AHA = Parse.Object.extend("AHAObject");
           var ahaObject = new AHA();
-            ahaObject.save(r).then(function(object) {
+            ahaObject.save({"gov":r}).then(function(object) {
               alert("yay! it worked AHA");
             });
           
