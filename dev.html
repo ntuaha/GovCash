@@ -14,11 +14,12 @@
 	  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js" charset="utf-8"></script>
     <script>
       $(function(){
+          Parse.initialize("IzQjJlCMrbf28ECznGwhrhX3OhmBJcFO8umPd1qs", "gLvtIDjBgQBTlcJN4cw2X4t5byJqarbt1XISXw9z");
         $.ajax({
           url:"./data/pay_and_rec.json",
           dataType:"json",
           success:function(r){
-            Parse.initialize("IzQjJlCMrbf28ECznGwhrhX3OhmBJcFO8umPd1qs", "gLvtIDjBgQBTlcJN4cw2X4t5byJqarbt1XISXw9z");
+          
             
             for (var x in r){
               $("body").append("<div>"+r[x]+"</div>");
