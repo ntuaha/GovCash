@@ -15,6 +15,12 @@
     <script>
       $(function(){
           Parse.initialize("IzQjJlCMrbf28ECznGwhrhX3OhmBJcFO8umPd1qs", "gLvtIDjBgQBTlcJN4cw2X4t5byJqarbt1XISXw9z");
+                   var TestObject = Parse.Object.extend("TestObject");
+          var testObject = new TestObject();
+            testObject.save({"GG":"GG123"}).then(function(object) {
+              alert("yay! it worked");
+            });
+          
         $.ajax({
           url:"./data/pay_and_rec.json",
           dataType:"json",
